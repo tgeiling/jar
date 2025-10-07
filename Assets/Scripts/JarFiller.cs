@@ -8,6 +8,10 @@ public class JarFiller : MonoBehaviour
     [SerializeField] private float maxFillHeight = 2f; // Maximum height the liquid can reach
     [SerializeField] private float fillSpeed = 1f; // How fast the liquid rises
     
+    [Header("Pour Effect")]
+    [SerializeField] private ParticleSystem pourEffect; // Drag your particle system here
+    [SerializeField] private float pourDuration = 0.5f; // How long liquid pours
+    
     private float currentFillHeight = 0.1f; // Start with a tiny bit of liquid visible
     private float targetFillHeight = 0.1f;
     private Vector3 initialScale;
@@ -47,6 +51,7 @@ public class JarFiller : MonoBehaviour
 
         if (inputDetected)
         {
+            Debug.Log("Click detected! Filling jar...");
             FillJar();
         }
 
@@ -66,10 +71,25 @@ public class JarFiller : MonoBehaviour
         // Clamp to max height
         targetFillHeight = Mathf.Min(targetFillHeight, maxFillHeight);
         
+        // Trigger pour effect
+        if (pourEffect != null)
+        {
+            pourEffect.Play();
+            Invoke("StopPourEffect", pourDuration);
+        }
+        
         // Optional: Add feedback
         if (targetFillHeight >= maxFillHeight)
         {
             Debug.Log("Jar is full!");
+        }
+    }
+    
+    void StopPourEffect()
+    {
+        if (pourEffect != null)
+        {
+            pourEffect.Stop();
         }
     }
 
