@@ -12,9 +12,12 @@ public class JarFiller : MonoBehaviour
     [SerializeField] private ParticleSystem pourEffect; // Drag your particle system here
     [SerializeField] private float pourDuration = 0.5f; // How long liquid pours
     
+    private bool isFull = false; // Track if jar is full
+    private bool coinsAwarded = false; // Track if coins were already given
+    
     private float currentFillHeight = 0.1f; // Start with a tiny bit of liquid visible
     private float targetFillHeight = 0.1f;
-    private Vector3 initialScale;
+    private float initialScaleY;
     private Vector3 initialPosition;
 
     void Start()
@@ -25,8 +28,8 @@ public class JarFiller : MonoBehaviour
             return;
         }
 
-        // Store initial scale and position
-        initialScale = liquidObject.localScale;
+        // Store initial scale Y and position
+        initialScaleY = liquidObject.localScale.y;
         initialPosition = liquidObject.localPosition;
         
         // Set initial liquid height
@@ -35,6 +38,12 @@ public class JarFiller : MonoBehaviour
 
     void Update()
     {
+        // Don't allow input if jar is already full
+        if (isFull)
+        {
+            return;
+        }
+        
         // Check for touch input (mobile) or mouse click (testing in editor)
         bool inputDetected = false;
 
@@ -78,10 +87,20 @@ public class JarFiller : MonoBehaviour
             Invoke("StopPourEffect", pourDuration);
         }
         
-        // Optional: Add feedback
-        if (targetFillHeight >= maxFillHeight)
+        // Check if jar just became full
+        if (targetFillHeight >= maxFillHeight && !coinsAwarded)
         {
+            isFull = true;
+            coinsAwarded = true; // Prevent multiple coin awards
             Debug.Log("Jar is full!");
+            
+            // Award coins only once
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnJarFilled();
+            }
+            
+            // Don't reset the jar anymore - it stays full
         }
     }
     
@@ -96,22 +115,30 @@ public class JarFiller : MonoBehaviour
     void UpdateLiquidVisual()
     {
         // Scale the liquid on Y axis to show filling
-        Vector3 newScale = initialScale;
+        Vector3 newScale = liquidObject.localScale;
         newScale.y = currentFillHeight;
         liquidObject.localScale = newScale;
 
         // Adjust position so liquid rises from the bottom
         Vector3 newPosition = initialPosition;
-        newPosition.y = initialPosition.y + (currentFillHeight - initialScale.y) / 2f;
+        newPosition.y = initialPosition.y + (currentFillHeight - initialScaleY) / 2f;
         liquidObject.localPosition = newPosition;
     }
 
-    // Optional: Method to empty the jar
+    // Optional: Method to empty the jar (can be called when you want to restart)
     public void EmptyJar()
     {
         targetFillHeight = 0.1f;
         currentFillHeight = 0.1f;
+        isFull = false;
+        coinsAwarded = false;
         UpdateLiquidVisual();
+        
+        // Hide warning when emptying
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.HideWarning();
+        }
     }
 
     // Optional: Get fill percentage (useful for UI)
