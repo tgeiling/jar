@@ -722,6 +722,63 @@ MonoBehaviour:
   coinsPerFill: 500
   coinText: {fileID: 2056068538}
   warningText: {fileID: 1622099339}
+--- !u!1001 &1441220057
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -45.28
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
+      propertyPath: m_Name
+      value: Wall_FloorModel_CornerRoom
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b570854a3cdf24cdfac446cea1b63796, type: 3}
 --- !u!1 &1622099337
 GameObject:
   m_ObjectHideFlags: 0
@@ -6064,3 +6121,4 @@ SceneRoots:
   - {fileID: 1351359245}
   - {fileID: 116686371}
   - {fileID: 1842809434}
+  - {fileID: 1441220057}
