@@ -3,7 +3,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance; // Singleton so other scripts can access it easily
+    public static GameManager Instance;
     
     [Header("Currency")]
     [SerializeField] private int coins = 0;
@@ -11,11 +11,15 @@ public class GameManager : MonoBehaviour
     
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI coinText;
-    [SerializeField] private TextMeshProUGUI warningText; // New warning text
+    [SerializeField] private TextMeshProUGUI warningText;
+    
+    [Header("Managers")]
+    [SerializeField] private AchievementsManager achievementsManager;
+    
+    private int jarsFilled = 0; // Track total jars filled
     
     void Awake()
     {
-        // Singleton pattern - ensures only one GameManager exists
         if (Instance == null)
         {
             Instance = this;
@@ -29,15 +33,24 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         UpdateCoinUI();
-        HideWarning(); // Hide warning at start
+        HideWarning();
     }
     
-    // Call this when jar gets filled
     public void OnJarFilled()
     {
         AddCoins(coinsPerFill);
-        Debug.Log("Jar filled! Earned " + coinsPerFill + " coins");
-        ShowWarning(); // Show warning when full
+        jarsFilled++;
+        
+        Debug.Log("Jar filled! Earned " + coinsPerFill + " coins. Total fills: " + jarsFilled);
+        ShowWarning();
+        
+        // Track achievements
+        if (achievementsManager != null)
+        {
+            achievementsManager.IncrementAchievement("First Fill");
+            achievementsManager.IncrementAchievement("Fill Master");
+            achievementsManager.IncrementAchievement("Dedication");
+        }
     }
     
     public void AddCoins(int amount)
@@ -60,6 +73,11 @@ public class GameManager : MonoBehaviour
     public int GetCoins()
     {
         return coins;
+    }
+    
+    public int GetJarsFilled()
+    {
+        return jarsFilled;
     }
     
     void UpdateCoinUI()
